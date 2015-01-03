@@ -1,6 +1,7 @@
 package com.josroossien.arluck.events;
 
 import com.clashwars.cwcore.helpers.CWItem;
+import com.clashwars.cwcore.packet.ParticleEffect;
 import com.clashwars.cwcore.utils.CWUtil;
 import com.josroossien.arluck.ARLuck;
 import org.bukkit.CropState;
@@ -48,8 +49,8 @@ public class LuckEvents implements Listener {
 				if (arl.luck.checkChance(player, 0.005f, 0.1f)) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 100, 5));
 					player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.1f, 0.6f);
-					//ParticleEffect.WITCH_MAGIC.display(player.getLocation(), 0.5f, 1.0f, 0.5f, 0.01f, 50);
 					player.sendMessage(CWUtil.integrateColor(prefix + "Haste!"));
+                    ParticleEffect.WITCH_MAGIC.display(player.getLocation(), 0.5f, 1.0f, 0.5f, 0.01f, 50);
 				}
 			}
 			return;
@@ -67,9 +68,9 @@ public class LuckEvents implements Listener {
                         case SPIDER:
                         case PIG:
                             player.getWorld().playSound(block.getLocation(), Sound.LEVEL_UP, 2.0f, 2.0f);
-                            //ParticleEffect.FLAME.display(block.getLocation().add(0.5f, 0, 0.5f), 0.5f, 0.5f, 0.5f, 0.001f, 100);
                             player.getWorld().dropItemNaturally(block.getLocation(), arl.getSpawnerItem(spawner.getSpawnedType().toString().toLowerCase().replace("_", "")));
                             player.sendMessage(CWUtil.integrateColor(prefix + "You got extremely lucky and got the spawner!!!!"));
+                            ParticleEffect.FLAME.display(block.getLocation().add(0.5f, 0, 0.5f), 0.5f, 0.5f, 0.5f, 0.001f, 100);
                             break;
                         default:
                             break;
@@ -94,9 +95,9 @@ public class LuckEvents implements Listener {
 		if (block.getType() == Material.DIAMOND_ORE) {
 			if (arl.luck.checkChance(player, 0.01f, 0.1f)) {
 				player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.DIAMOND, 1));
-				//ParticleEffect.MAGIC_CRIT.display(block.getLocation().add(0.5f, 0, 0.5f), 1.0f, 1.0f, 1.0f, 0.1f, 50);
-				//ParticleEffect.ENCHANTMENT_TABLE.display(block.getLocation().add(0.5f, 0.5f, 0.5f), 0.8f, 0.8f, 0.8f, 0.0001f, 100);
 				player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra diamond!"));
+                ParticleEffect.MAGIC_CRIT.display(block.getLocation().add(0.5f, 0, 0.5f), 1.0f, 1.0f, 1.0f, 0.1f, 50);
+                ParticleEffect.ENCHANTMENT_TABLE.display(block.getLocation().add(0.5f, 0.5f, 0.5f), 0.8f, 0.8f, 0.8f, 0.0001f, 100);
 			}
 			return;
 		}
@@ -105,8 +106,8 @@ public class LuckEvents implements Listener {
 		if (block.getType() == Material.EMERALD_ORE) {
 			if (arl.luck.checkChance(player, 0.01f, 0.2f)) {
 				player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.EMERALD, 1));
-				//ParticleEffect.HAPPY_VILLAGER.display(block.getLocation().add(0.5f, 0, 0.5f), 0.6f, 0.6f, 0.6f, 0.001f, 50);
 				player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra emerald! More luck!"));
+                ParticleEffect.HAPPY_VILLAGER.display(block.getLocation().add(0.5f, 0, 0.5f), 0.6f, 0.6f, 0.6f, 0.001f, 50);
 			}
 			return;
 		}
@@ -132,8 +133,8 @@ public class LuckEvents implements Listener {
 							bs.update();
 						}
 						player.playSound(block.getLocation(), Sound.DIG_GRASS, 1.0f, 0.8f);
-						//ParticleEffect.DRIP_WATER.display(b.getLocation().add(0.5f, -0.5f, 0.5f), 0.3f, 0.8f, 0.3f, 1.0f, 30);
 						player.sendMessage(CWUtil.integrateColor(prefix + "Insta growth!"));
+                        ParticleEffect.DRIP_WATER.display(b.getLocation().add(0.5f, -0.5f, 0.5f), 0.3f, 0.8f, 0.3f, 1.0f, 30);
 					}
 				}
 			}
@@ -180,8 +181,8 @@ public class LuckEvents implements Listener {
 			if (arl.luck.checkChance(player, 0.002f, 0.05f)) {
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1));
 				player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.1f, 0.6f);
-				//ParticleEffect.HAPPY_VILLAGER.display(player.getLocation(), 0.5f, 1.0f, 0.5f, 1.0f, 20);
 				player.sendMessage(CWUtil.integrateColor(prefix + "Speed!"));
+                ParticleEffect.HAPPY_VILLAGER.display(player.getLocation(), 0.5f, 1.0f, 0.5f, 1.0f, 20);
 			}
 		}
 	}
@@ -220,8 +221,8 @@ public class LuckEvents implements Listener {
 				float chance = random.nextFloat();
 				if (chance <= 0.08f) {
 					entity.getWorld().playSound(entity.getLocation(), Sound.ANVIL_LAND, 0.5f, 2f);
-					//ParticleEffect.WITCH_MAGIC.display(entity.getLocation(), 1.0f, 1.0f, 1.0f, 1.0f, 50);
 					((Ageable)entity).setAdult();
+                    ParticleEffect.WITCH_MAGIC.display(entity.getLocation(), 1.0f, 1.0f, 1.0f, 1.0f, 50);
 				}
 			}
 		}
@@ -306,8 +307,8 @@ public class LuckEvents implements Listener {
 			if (type != null && data > 0) {
                 event.getDrops().add(new CWItem(Material.MONSTER_EGG, 1, data, ("&5&l" + type.toString().toLowerCase().replace("_", " ") + " &6&legg"), new String[]{"&7Can be used to craft spawners!", "&5/recipe spawner &7to see the recipe."}));
 				killer.getWorld().playSound(entity.getLocation(), Sound.LEVEL_UP, 2.0f, 2.0f);
-				//ParticleEffect.FLAME.display(entity.getLocation(), 0.5f, 0.5f, 0.5f, 0.001f, 100);
 				killer.sendMessage(CWUtil.integrateColor(prefix + "Mob spawn egg!"));
+                ParticleEffect.FLAME.display(entity.getLocation(), 0.5f, 0.5f, 0.5f, 0.001f, 100);
 			}
 		}
 	}
