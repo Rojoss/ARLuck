@@ -1,0 +1,10 @@
+main : com.josroossien.arluck.ARLuck
+name: ARLuck
+version: 0.1
+description: Luck plugin based on emeralds.
+depend: [CWCore]
+commands:
+  arluck:
+    description: Main luck command.
+    usage: /<command>
+    aliases: [luck]
