@@ -10,6 +10,7 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -93,22 +94,26 @@ public class LuckEvents implements Listener {
 		
 		//Break Diamond ore : get extra diamond
 		if (block.getType() == Material.DIAMOND_ORE) {
-			if (arl.luck.checkChance(player, 0.01f, 0.1f)) {
-				player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.DIAMOND, 1));
-				player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra diamond!"));
-                ParticleEffect.MAGIC_CRIT.display(block.getLocation().add(0.5f, 0, 0.5f), 1.0f, 1.0f, 1.0f, 0.1f, 50);
-                ParticleEffect.ENCHANTMENT_TABLE.display(block.getLocation().add(0.5f, 0.5f, 0.5f), 0.8f, 0.8f, 0.8f, 0.0001f, 100);
-			}
+            if (player.getItemInHand() != null && !player.getItemInHand().getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
+                if (arl.luck.checkChance(player, 0.01f, 0.1f)) {
+                    player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.DIAMOND, 1));
+                    player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra diamond!"));
+                    ParticleEffect.MAGIC_CRIT.display(block.getLocation().add(0.5f, 0, 0.5f), 1.0f, 1.0f, 1.0f, 0.1f, 50);
+                    ParticleEffect.ENCHANTMENT_TABLE.display(block.getLocation().add(0.5f, 0.5f, 0.5f), 0.8f, 0.8f, 0.8f, 0.0001f, 100);
+                }
+            }
 			return;
 		}
 		
 		//Break Emerald ore : get extra emerald
 		if (block.getType() == Material.EMERALD_ORE) {
-			if (arl.luck.checkChance(player, 0.01f, 0.2f)) {
-				player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.EMERALD, 1));
-				player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra emerald! More luck!"));
-                ParticleEffect.HAPPY_VILLAGER.display(block.getLocation().add(0.5f, 0, 0.5f), 0.6f, 0.6f, 0.6f, 0.001f, 50);
-			}
+            if (player.getItemInHand() != null && !player.getItemInHand().getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
+                if (arl.luck.checkChance(player, 0.01f, 0.2f)) {
+                    player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.EMERALD, 1));
+                    player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra emerald! More luck!"));
+                    ParticleEffect.HAPPY_VILLAGER.display(block.getLocation().add(0.5f, 0, 0.5f), 0.6f, 0.6f, 0.6f, 0.001f, 50);
+                }
+            }
 			return;
 		}
 	}
