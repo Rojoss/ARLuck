@@ -19,6 +19,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Crops;
@@ -31,7 +32,7 @@ public class LuckEvents implements Listener {
 
 	private ARLuck arl;
 	private Random random = new Random();
-	private String prefix = "&8[&4Luck&8] &2";
+	private String prefix = "&8[&2Luck&8] &a";
 	
 	public LuckEvents(ARLuck arl) {
 		this.arl = arl;
@@ -51,7 +52,7 @@ public class LuckEvents implements Listener {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 100, 5));
 					player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.1f, 0.6f);
 					player.sendMessage(CWUtil.integrateColor(prefix + "Haste!"));
-                    ParticleEffect.WITCH_MAGIC.display(player.getLocation(), 0.5f, 1.0f, 0.5f, 0.01f, 50);
+                    ParticleEffect.SPELL_WITCH.display(0.5f, 1.0f, 0.5f, 0.01f, 50, player.getLocation());
 				}
 			}
 			return;
@@ -71,7 +72,7 @@ public class LuckEvents implements Listener {
                             player.getWorld().playSound(block.getLocation(), Sound.LEVEL_UP, 2.0f, 2.0f);
                             player.getWorld().dropItemNaturally(block.getLocation(), arl.getSpawnerItem(spawner.getSpawnedType().toString().toLowerCase().replace("_", "")));
                             player.sendMessage(CWUtil.integrateColor(prefix + "You got extremely lucky and got the spawner!!!!"));
-                            ParticleEffect.FLAME.display(block.getLocation().add(0.5f, 0, 0.5f), 0.5f, 0.5f, 0.5f, 0.001f, 100);
+                            ParticleEffect.FLAME.display(0.5f, 0.5f, 0.5f, 0.001f, 100, block.getLocation().add(0.5f, 0, 0.5f));
                             break;
                         default:
                             break;
@@ -98,8 +99,8 @@ public class LuckEvents implements Listener {
                 if (arl.luck.checkChance(player, 0.01f, 0.1f)) {
                     player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.DIAMOND, 1));
                     player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra diamond!"));
-                    ParticleEffect.MAGIC_CRIT.display(block.getLocation().add(0.5f, 0, 0.5f), 1.0f, 1.0f, 1.0f, 0.1f, 50);
-                    ParticleEffect.ENCHANTMENT_TABLE.display(block.getLocation().add(0.5f, 0.5f, 0.5f), 0.8f, 0.8f, 0.8f, 0.0001f, 100);
+                    ParticleEffect.CRIT_MAGIC.display(1.0f, 1.0f, 1.0f, 0.1f, 50, block.getLocation().add(0.5f, 0, 0.5f));
+                    ParticleEffect.ENCHANTMENT_TABLE.display(0.8f, 0.8f, 0.8f, 0.0001f, 100, block.getLocation().add(0.5f, 0.5f, 0.5f));
                 }
             }
 			return;
@@ -111,7 +112,7 @@ public class LuckEvents implements Listener {
                 if (arl.luck.checkChance(player, 0.01f, 0.2f)) {
                     player.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.EMERALD, 1));
                     player.sendMessage(CWUtil.integrateColor(prefix + "You found a extra emerald! More luck!"));
-                    ParticleEffect.HAPPY_VILLAGER.display(block.getLocation().add(0.5f, 0, 0.5f), 0.6f, 0.6f, 0.6f, 0.001f, 50);
+                    ParticleEffect.VILLAGER_HAPPY.display(0.6f, 0.6f, 0.6f, 0.001f, 50, block.getLocation().add(0.5f, 0, 0.5f));
                 }
             }
 			return;
@@ -139,7 +140,7 @@ public class LuckEvents implements Listener {
 						}
 						player.playSound(block.getLocation(), Sound.DIG_GRASS, 1.0f, 0.8f);
 						player.sendMessage(CWUtil.integrateColor(prefix + "Insta growth!"));
-                        ParticleEffect.DRIP_WATER.display(b.getLocation().add(0.5f, -0.5f, 0.5f), 0.3f, 0.8f, 0.3f, 1.0f, 30);
+                        ParticleEffect.DRIP_WATER.display(0.3f, 0.8f, 0.3f, 1.0f, 30, b.getLocation().add(0.5f, -0.5f, 0.5f));
 					}
 				}
 			}
@@ -187,7 +188,7 @@ public class LuckEvents implements Listener {
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1));
 				player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.1f, 0.6f);
 				player.sendMessage(CWUtil.integrateColor(prefix + "Speed!"));
-                ParticleEffect.HAPPY_VILLAGER.display(player.getLocation(), 0.5f, 1.0f, 0.5f, 1.0f, 20);
+                ParticleEffect.VILLAGER_HAPPY.display(0.5f, 1.0f, 0.5f, 1.0f, 20, player.getLocation());
 			}
 		}
 	}
@@ -227,11 +228,24 @@ public class LuckEvents implements Listener {
 				if (chance <= 0.08f) {
 					entity.getWorld().playSound(entity.getLocation(), Sound.ANVIL_LAND, 0.5f, 2f);
 					((Ageable)entity).setAdult();
-                    ParticleEffect.WITCH_MAGIC.display(entity.getLocation(), 1.0f, 1.0f, 1.0f, 1.0f, 50);
+                    ParticleEffect.SPELL_WITCH.display(1.0f, 1.0f, 1.0f, 1.0f, 50, entity.getLocation());
 				}
 			}
 		}
 	}
+
+    @EventHandler
+    public void playerDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity();
+        float chance = random.nextFloat();
+        if (arl.luck.checkChance(player, 0.02f, 0.4f)) {
+            event.setDroppedExp(0);
+            event.setKeepLevel(true);
+            player.getWorld().playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 2f);
+            player.sendMessage(CWUtil.integrateColor(prefix + "No XP lost!"));
+            ParticleEffect.VILLAGER_HAPPY.display(1.0f, 1.0f, 1.0f, 1.0f, 50, player.getLocation());
+        }
+    }
 	
 	@EventHandler
 	public void kill(EntityDeathEvent event) {
@@ -313,7 +327,7 @@ public class LuckEvents implements Listener {
                 event.getDrops().add(new CWItem(Material.MONSTER_EGG, 1, data, ("&5&l" + type.toString().toLowerCase().replace("_", " ") + " &6&legg"), new String[]{"&7Can be used to craft spawners!", "&5/recipe spawner &7to see the recipe."}));
 				killer.getWorld().playSound(entity.getLocation(), Sound.LEVEL_UP, 2.0f, 2.0f);
 				killer.sendMessage(CWUtil.integrateColor(prefix + "Mob spawn egg!"));
-                ParticleEffect.FLAME.display(entity.getLocation(), 0.5f, 0.5f, 0.5f, 0.001f, 100);
+                ParticleEffect.FLAME.display(0.5f, 0.5f, 0.5f, 0.001f, 100, entity.getLocation());
 			}
 		}
 	}

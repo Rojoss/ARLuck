@@ -48,12 +48,7 @@ public class Luck {
 		while (blockAbove.getType() == Material.LOG || blockAbove.getType() == Material.LOG_2) {
 			blocksRemoved++;
 			blockAbove.breakNaturally();
-			if (blockAbove.getType() == Material.LOG_2) {
-				ParticleEffect.displayBlockCrack(blockAbove.getLocation().add(0.5f, 0f, 0.5f), 162, blockAbove.getData(), 0.5f, 0.5f, 0.5f, 20);
-			} else {
-				ParticleEffect.displayBlockCrack(blockAbove.getLocation().add(0.5f, 0f, 0.5f), 17, blockAbove.getData(), 0.5f, 0.5f, 0.5f, 20);
-			}
-			
+            ParticleEffect.BLOCK_CRACK.display(new ParticleEffect.BlockData(blockAbove.getType(), blockAbove.getData()), 0.5f, 0.5f, 0.5f, 0.2f, 20, blockAbove.getLocation().add(0.5f, 0f, 0.5f));
 			blockAbove = blockAbove.getRelative(BlockFace.UP);
 		}
 		if (blocksRemoved < 1) {
